@@ -99,27 +99,27 @@ export default class CompanyChart extends Component {
               },
               tooltips: {
                   mode: 'index',
-                  intersect: false,
+                  intersect: true,
               },
               hover: {
                   mode: 'nearest',
                   intersect: true
               },
               scales: {
-                  xAxes: [{
+                  x: {
                       display: true,
-                      scaleLabel: {
+                      title: {
                           display: true,
                           labelString: 'Time'
                       }
-                  }],
-                  yAxes: [{
+                  },
+                  y: {
                       display: true,
-                      scaleLabel: {
+                      title: {
                           display: true,
                           labelString: 'Date'
                       }
-                  }]
+                  }
               },
               plugins: {
                   datalabels: {

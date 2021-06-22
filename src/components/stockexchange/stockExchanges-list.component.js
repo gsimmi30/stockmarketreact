@@ -55,7 +55,8 @@ export default class StockExchangesList extends Component {
     return (
       <div className="list row">
         <div className="col-md-6">
-          <h4>StockExchanges List</h4>
+        <Link to={"/stockExchangesadd/"}>Add Stock Exchange</Link>
+          
 
           <ul className="list-group">
             {stockexchanges &&
@@ -110,14 +111,14 @@ export default class StockExchangesList extends Component {
 
               <Link
                 to={"/stockExchangesedit/" + currentStockExchange.id}
-                className="badge badge-warning"
+                className="link-info px-3"
               >
                   Edit
               </Link>
 
               <Link
                 to={"/stockExchangescomp/" + currentStockExchange.id}
-                className="badge badge-warning"
+                className="link-info px-3"
               >
                   Companies
               </Link>
@@ -130,7 +131,7 @@ export default class StockExchangesList extends Component {
             </div>
           )}
         </div>
-        <Link to={"/stockExchangesadd/"}>Add Stock Exchange</Link>
+        
       </div>
     );
   }

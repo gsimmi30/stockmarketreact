@@ -55,7 +55,8 @@ export default class SectorsList extends Component {
     return (
       <div className="list row">
         <div className="col-md-6">
-          <h4>Sectors List</h4>
+        <Link to={"/sectors/add/"}>Add Sector</Link>
+          
 
           <ul className="list-group">
             {sectors &&
@@ -98,14 +99,14 @@ export default class SectorsList extends Component {
 
               <Link
                 to={"/sectors/" + currentSector.id}
-                className="badge badge-warning"
+                className="link-info px-3"
               >
                   Edit
               </Link>
 
               <Link
                 to={"/sectorscomp/" + currentSector.id}
-                className="badge badge-warning"
+                className="link-info px-3"
               >
                   Companies
               </Link>
@@ -118,7 +119,6 @@ export default class SectorsList extends Component {
             </div>
           )}
         </div>
-        <Link to={"/sectors/add/"}>Add Sector</Link>
       </div>
     );
   }

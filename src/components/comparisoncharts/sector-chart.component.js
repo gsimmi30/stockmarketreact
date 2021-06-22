@@ -99,7 +99,7 @@ export default class SectorChart extends Component {
               },
               tooltips: {
                   mode: 'index',
-                  intersect: false,
+                  intersect: true,
               },
               hover: {
                   mode: 'nearest',

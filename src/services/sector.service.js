@@ -1,29 +1,32 @@
-import http from "../http-common";
+import axios from "axios";
+const API_URL = 'https://ancient-shore-52392.herokuapp.com';
+const URL_R = 'https://reactappstock.herokuapp.com';
+const user = JSON.parse(localStorage.getItem('user'));
 
 class SectorService {
 
   findAll() {
-    return http.get(`/sectors`);
+    return axios.get(API_URL + '/sectors', { headers: {'Access-Control-Allow-Origin': URL_R,'Content-Type': 'application/json',"Authorization": "Bearer " + user.token }});
   }
 
   findById(id) {
-    return http.get(`/sectors/${id}`);
+    return axios.get(API_URL + '/sectors/'+id, { headers: {'Access-Control-Allow-Origin': URL_R,'Content-Type': 'application/json',"Authorization": "Bearer " + user.token } });
   }
 
   create(data) {
-    return http.post(`/sectors`, data);
+    return axios.post(API_URL + '/sectors',data,{ headers: {'Access-Control-Allow-Origin': URL_R,'Content-Type': 'application/json',"Authorization": "Bearer " + user.token } });
   }
 
   update(data) {
-    return http.put(`/sectors`, data);
+    return axios.put(API_URL + '/sectors',data,{ headers: {'Access-Control-Allow-Origin': URL_R,'Content-Type': 'application/json',"Authorization": "Bearer " + user.token } });
   }
 
   delete(id) {
-    return http.delete(`/sectors/${id}`);
+    return axios.delete(API_URL + '/sectors/'+id, { headers: {'Access-Control-Allow-Origin': URL_R,'Content-Type': 'application/json',"Authorization": "Bearer " + user.token } });
   }
 
   findCompanies(id) {
-    return http.get(`/sectorscomp/${id}`);
+    return axios.get(API_URL + '/sectorscomp/'+id, { headers: {'Access-Control-Allow-Origin': URL_R,'Content-Type': 'application/json',"Authorization": "Bearer " + user.token } });
   }
 }
 

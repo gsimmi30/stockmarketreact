@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import IpoService from "../../services/ipo.service";
 import { Link } from "react-router-dom";
+import AuthService from "../../services/auth.service";
 
 export default class IposList extends Component {
   constructor(props) {
@@ -12,7 +13,9 @@ export default class IposList extends Component {
     this.state = {
       ipos: [],
       currentIpo: null,
-      currentIndex: -1
+      currentIndex: -1,
+      currentUser: AuthService.getCurrentUser(),
+      showAdminBoard: AuthService.getCurrentUser().role.includes("ADMIN"),
     };
   }
 
@@ -50,12 +53,14 @@ export default class IposList extends Component {
   }
 
   render() {
-    const { ipos, currentIpo, currentIndex } = this.state;
+    const { ipos, currentIpo, currentIndex, showAdminBoard } = this.state;
 
     return (
       <div className="list row">
         <div className="col-md-6">
-          <h4>Ipos List</h4>
+        {showAdminBoard && (
+        <Link to={"/iposadd/"}>Add IPO</Link>
+        )}
 
           <ul className="list-group">
             {ipos &&
@@ -119,14 +124,14 @@ export default class IposList extends Component {
                 </label>{" "}
                 {currentIpo.price}
               </div>
-
+              {showAdminBoard && (
               <Link
                 to={"/ipoedit/" + currentIpo.id}
-                className="badge badge-warning"
+                className="link-info px-3"
               >
                   Edit
               </Link>
-          
+              )}
             </div>
           ) : (
             <div>
@@ -135,8 +140,8 @@ export default class IposList extends Component {
             </div>
           )}
         </div>
-        <Link to={"/iposadd/"}>Add IPO</Link>
       </div>
+      
     );
   }
 }

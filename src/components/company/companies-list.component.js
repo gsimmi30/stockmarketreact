@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import CompanyService from "../../services/company.service";
 import { Link } from "react-router-dom";
+import AuthService from "../../services/auth.service";
 
 export default class CompaniesList extends Component {
   constructor(props) {
@@ -10,12 +11,14 @@ export default class CompaniesList extends Component {
     this.setActiveCompany = this.setActiveCompany.bind(this);
     this.searchTitle = this.searchTitle.bind(this);
     this.onChangeSearchTitle = this.onChangeSearchTitle.bind(this);
-
+    const user = JSON.parse(localStorage.getItem('user'));
     this.state = {
       companies: [],
       searchTitle: "",
       currentCompany: null,
-      currentIndex: -1
+      currentIndex: -1,
+      currentUser: AuthService.getCurrentUser(),
+      showAdminBoard: user.role.includes("ADMIN")
     };
   }
 
@@ -35,11 +38,10 @@ export default class CompaniesList extends Component {
         this.setState({
           companies: response.data
         });
-        console.log(response.data);
-      })
-      .catch(e => {
+      }).catch((e) => {
         console.log(e);
       });
+      console.log(this.state.companies);
   }
 
 
@@ -71,11 +73,11 @@ export default class CompaniesList extends Component {
       });}
 
   render() {
-    const { searchTitle,companies, currentCompany, currentIndex } = this.state;
+    const { searchTitle,companies, currentCompany, currentIndex, showAdminBoard } = this.state;
 
     return (
       <div className="list row">
-        <div className="col-md-8">
+        <div className="col-sm-8">
           <div className="input-group mb-3">
             <input
               type="text"
@@ -94,10 +96,9 @@ export default class CompaniesList extends Component {
               </button>
             </div>
           </div>
-        </div>
-        <div className="col-md-8">
-          <h4>Companies List</h4>
-
+          {showAdminBoard && (
+        <Link to={"/companyadd/"}>Add Company</Link>
+        )}
           <ul className="list-group">
             {companies &&
               companies.map((company, index) => (
@@ -118,12 +119,6 @@ export default class CompaniesList extends Component {
           {currentCompany ? (
             <div>
               <h4>Company</h4>
-              <div>
-                <label>
-                  <strong>ID:</strong>
-                </label>{" "}
-                {currentCompany.id}
-              </div>
               <div>
                 <label>
                   <strong>Company:</strong>
@@ -166,26 +161,28 @@ export default class CompaniesList extends Component {
                 </label>{" "}
                 {currentCompany.description}
               </div>
-
+              {showAdminBoard && (
+              <div>
               <Link
                 to={"/companyedit/" + currentCompany.id}
-                className="badge badge-warning"
+                className="link-info px-3"
               >
                   Edit
               </Link>
               <Link
-                to={"/companyipo/" + currentCompany.id}
-                className="badge badge-warning"
-              >
-                  IPOs
-              </Link>
-              <Link
                 to={"/companystockprice/" + currentCompany.id}
-                className="badge badge-warning"
+                className="link-info px-3"
               >
                   StockPrice
               </Link>
-          
+              </div>
+              )}
+              <Link
+                to={"/companyipo/" + currentCompany.id}
+                className="link-info px-3"
+              >
+                  IPOs
+              </Link>
             </div>
           ) : (
             <div>
@@ -194,7 +191,6 @@ export default class CompaniesList extends Component {
             </div>
           )}
         </div>
-        <Link to={"/companyadd/"}>Add Company</Link>
       </div>
     );
   }

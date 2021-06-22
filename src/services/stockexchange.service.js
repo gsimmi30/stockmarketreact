@@ -1,29 +1,32 @@
-import http from "../http-common";
+import axios from "axios";
+const API_URL = 'https://ancient-shore-52392.herokuapp.com';
+const URL_R = 'https://reactappstock.herokuapp.com';
+const user = JSON.parse(localStorage.getItem('user'));
 
 class StockExchangeService {
 
   findAll() {
-    return http.get(`/stockExchanges`);
+    return axios.get(API_URL + '/stockExchanges', { headers: {'Access-Control-Allow-Origin': URL_R,'Content-Type': 'application/json',"Authorization": "Bearer " + user.token }});
   }
 
   findById(id) {
-    return http.get(`/stockExchanges/${id}`);
+    return axios.get(API_URL + '/stockExchanges/'+id, { headers: {'Access-Control-Allow-Origin': URL_R,'Content-Type': 'application/json',"Authorization": "Bearer " + user.token } });
   }
 
   create(data) {
-    return http.post(`/stockExchanges`, data);
+    return axios.post(API_URL + '/stockExchanges',data,{ headers: {'Access-Control-Allow-Origin': URL_R,'Content-Type': 'application/json',"Authorization": "Bearer " + user.token } });
   }
 
   update(data) {
-    return http.put(`/stockExchanges`, data);
+    return axios.put(API_URL + '/stockExchanges',data,{ headers: {'Access-Control-Allow-Origin': URL_R,'Content-Type': 'application/json',"Authorization": "Bearer " + user.token } });
   }
 
   delete(id) {
-    return http.delete(`/stockExchanges/${id}`);
+    return axios.delete(API_URL + '/stockExchanges/'+id, { headers: {'Access-Control-Allow-Origin': URL_R,'Content-Type': 'application/json',"Authorization": "Bearer " + user.token } });
   }
 
   findCompanies(id) {
-    return http.get(`/stockExchangescomp/${id}`);
+    return axios.get(API_URL + '/stockExchangescomp/'+id, { headers: {'Access-Control-Allow-Origin': URL_R,'Content-Type': 'application/json',"Authorization": "Bearer " + user.token } });
   }
 }
 

@@ -15,6 +15,7 @@ export default class StockPriceImport extends Component {
             date: "",
             time: ""
           },
+          data2:[],
           data1: [] /* Array of Arrays e.g. [["a","b"],[1,2]] */,
           cols: [] /* Array of column objects e.g. { name: "C", K: 2 } */,
           numberOfRecords: 0,
@@ -69,6 +70,15 @@ export default class StockPriceImport extends Component {
         /* generate XLSX file and send to client */
         console.log(JSON.stringify(this.state.data1));
         StockPriceService.create(JSON.stringify(this.state.data1))
+        .then(response => {
+          this.setState({
+            data2 : response.data
+          });
+          console.log(response.data);
+        })
+        .catch(e => {
+          console.log(e);
+        });
         this.setState.message = "Data imported";
        // XLSX.writeFile(wb, "sheetjs.xlsx");
 

@@ -17,7 +17,8 @@ export default class AddStockExchange extends Component {
       stockExchangeName: "",
       brief: "",
       remarks: "",
-      contactAddress: ""
+      contactAddress: "",
+      submitted: false,
     };
   }
 
@@ -63,6 +64,7 @@ export default class AddStockExchange extends Component {
           contactAddress: this.state.contactAddress
         });
         console.log(response.data);
+        this.state.submitted=true;
       })
       .catch(e => {
         console.log(e);
